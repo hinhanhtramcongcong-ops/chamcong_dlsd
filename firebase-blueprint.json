@@ -1,0 +1,57 @@
+{
+  "entities": {
+    "Admins": {
+      "title": "Admins",
+      "description": "Danh sách người dùng có quyền quản trị",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email", "description": "Gmail của người quản trị" },
+        "role": { "type": "string", "enum": ["admin", "editor"], "description": "Vai trò" },
+        "createdAt": { "type": "number", "description": "Ngày tạo" }
+      },
+      "required": ["email", "role"]
+    },
+    "Employee": {
+      "title": "Employee",
+      "description": "Thông tin nhân viên",
+      "type": "object",
+      "properties": {
+        "employeeId": { "type": "string", "description": "Mã số nhân viên" },
+        "fullName": { "type": "string", "description": "Họ và tên" },
+        "team": { "type": "string", "description": "Tổ công tác" },
+        "gender": { "type": "string", "enum": ["Nam", "Nữ"], "description": "Giới tính" },
+        "createdAt": { "type": "number", "description": "Ngày tạo" }
+      },
+      "required": ["employeeId", "fullName", "team", "gender"]
+    },
+    "Attendance": {
+      "title": "Attendance",
+      "description": "Bản ghi chấm công hàng ngày",
+      "type": "object",
+      "properties": {
+        "employeeId": { "type": "string", "description": "Mã số nhân viên" },
+        "date": { "type": "string", "description": "Ngày chấm công (YYYY-MM-DD)" },
+        "status": { "type": "string", "enum": ["present", "absent", "late", "half-day", "off"] },
+        "proofUrl": { "type": "string", "description": "URL hình ảnh/file chứng minh" },
+        "workContent": { "type": "string", "description": "Nội dung công tác hàng ngày" },
+        "sxkd": { "type": "boolean", "description": "Sản xuất kinh doanh" },
+        "luuDong": { "type": "boolean", "description": "Lưu động" },
+        "thueXe": { "type": "boolean", "description": "Thuê xe" },
+        "atd": { "type": "boolean", "description": "An toàn điện" },
+        "notes": { "type": "string", "description": "Ghi chú" },
+        "updatedAt": { "type": "number", "description": "Thời gian cập nhật" }
+      },
+      "required": ["employeeId", "date", "status"]
+    }
+  },
+  "firestore": {
+    "/employees/{employeeId}": {
+      "schema": "Employee",
+      "description": "Danh sách nhân viên"
+    },
+    "/attendance/{recordId}": {
+      "schema": "Attendance",
+      "description": "Dữ liệu chấm công"
+    }
+  }
+}
